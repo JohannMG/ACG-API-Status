@@ -23,6 +23,26 @@ public struct Endpoint {
     let statusCode: Int?
     let responseTime: Int?
     let lastUpdated: String?
+    
+    func getEndpointName() -> String{
+        guard let endpointName = endpointName else { return "" }
+        
+        switch endpointName.lowercaseString {
+        case "zipgate":
+            return "ZipGate"
+        case "login":
+            return "Login"
+        case "myaaa":
+            return "My AAA"
+        case "getmessages":
+            return "Messages"
+        case "customerinformation":
+            return "Customer"
+        default:
+            return endpointName
+        }
+    }
+    
 }
 
 class StatusDataService {

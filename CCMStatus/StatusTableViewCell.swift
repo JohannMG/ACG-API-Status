@@ -12,6 +12,7 @@ class StatusTableViewCell: UITableViewCell {
 
     @IBOutlet weak var endpointName: UILabel!
     @IBOutlet weak var endpointResponseTimeLabel: UILabel!
+    @IBOutlet weak var statusBarView: StatusBarView!
     
     
     override func awakeFromNib() {
