@@ -27,7 +27,7 @@ public struct Endpoint {
     func getEndpointName() -> String{
         guard let endpointName = endpointName else { return "" }
         
-        switch endpointName.lowercaseString {
+        switch endpointName.lowercased() {
         case "zipgate":
             return "ZipGate"
         case "login":
@@ -46,48 +46,49 @@ public struct Endpoint {
 }
 
 class StatusDataService {
-    private let dataEndPoint = "https://ccm-web-tests.herokuapp.com/data"
-    private let mandatoryRefreshEndpoint = "https://ccm-web-tests.herokuapp.com/refresh"
+    fileprivate let dataEndPoint = "https://ccm-web-tests.herokuapp.com/data"
+    fileprivate let mandatoryRefreshEndpoint = "https://ccm-web-tests.herokuapp.com/refresh"
     
     static let sharedInstance = StatusDataService()
-    private let session: NSURLSession
+    fileprivate let session: URLSession
     
-    private init(){
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        session = NSURLSession(configuration: config)
+    fileprivate init(){
+        let config = URLSessionConfiguration.default
+        session = URLSession(configuration: config)
         
     }
     
-    func refreshData( completion: (endpoints: [EndpointsCategory]?, error: NSError?) -> Void ){
-        let updateTask = session.dataTaskWithURL( NSURL(string: dataEndPoint)! ) {( data: NSData?, response: NSURLResponse?, error: NSError? ) in
+    func refreshData( _ completion: @escaping (_ endpoints: [EndpointsCategory]?, _ error: Error?) -> Void ){
+        
+        let updateTask = session.dataTask( with: URL(string: dataEndPoint)!, completionHandler: {( data: Data?, response: URLResponse?, error: Error? ) in
             
             if let error = error {
-                completion(endpoints: nil, error: error)
+                completion(nil, error)
                 return
             }
             
             guard let data = data else {
-                completion(endpoints: nil, error: nil )
+                completion(nil, nil )
                 return
             }
             
             do {
-                if let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: AnyObject] {
-                    completion(endpoints: self.jsonResponseToObjects(jsonData), error:  nil)
+                if let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: AnyObject] {
+                    completion(self.jsonResponseToObjects(jsonData), nil)
                 }
                 
             } catch {
-                completion(endpoints: nil, error: nil)
+                completion(nil, nil)
                 return
             }
             
-        }
+        })
         
         updateTask.resume()
         
     }
     
-    private func jsonResponseToObjects( jsonData: [String: AnyObject] ) -> [EndpointsCategory] {
+    fileprivate func jsonResponseToObjects( _ jsonData: [String: AnyObject] ) -> [EndpointsCategory] {
         
         var allResults = [EndpointsCategory]()
         

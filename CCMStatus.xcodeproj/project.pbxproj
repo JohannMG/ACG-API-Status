@@ -159,9 +159,11 @@
 					2D996AEE1DFCC1B1008642E3 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 669DAFDR74;
+						LastSwiftMigration = 0820;
 					};
 					2D996B021DFCC1B2008642E3 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
 						TestTargetID = 2D996AEE1DFCC1B1008642E3;
 					};
 				};
@@ -351,6 +353,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.johannmg.CCMStatus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -365,6 +368,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.johannmg.CCMStatus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -376,6 +380,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.johannmg.CCMStatusTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CCMStatus.app/CCMStatus";
 			};
 			name = Debug;
@@ -388,6 +393,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.johannmg.CCMStatusTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CCMStatus.app/CCMStatus";
 			};
 			name = Release;
@@ -411,6 +417,7 @@
 				2D996B0E1DFCC1B2008642E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2D996B0F1DFCC1B2008642E3 /* Build configuration list for PBXNativeTarget "CCMStatusTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +426,7 @@
 				2D996B111DFCC1B2008642E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

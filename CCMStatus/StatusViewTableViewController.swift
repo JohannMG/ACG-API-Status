@@ -17,13 +17,13 @@ class StatusViewTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.separatorColor = UIColor.clear
         
         StatusDataService.sharedInstance.refreshData { (endpoints, error) in
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.endpointApiData = endpoints
                 self.tableView.reloadData()
             }
@@ -34,7 +34,7 @@ class StatusViewTableViewController: UITableViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
@@ -43,7 +43,7 @@ class StatusViewTableViewController: UITableViewController {
         if let image = UIImage(named: "SEATTLEBAY") {
             let imageView = UIImageView(image: image)
             imageView.frame = headerView.frame
-            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            imageView.contentMode = UIViewContentMode.scaleAspectFill
             headerView.addSubview(imageView)
         }
         
@@ -51,12 +51,12 @@ class StatusViewTableViewController: UITableViewController {
         headerView.addSubview(timeLabel)
         timeLabel.text = "Refreshed every 20 minutes"
 //        timeLabel.font = UIFont.systemFontOfSize(12, weight: UIFontWeightUltraLight)
-        timeLabel.font = UIFont.italicSystemFontOfSize(12)
-        timeLabel.textColor = UIColor.whiteColor()
+        timeLabel.font = UIFont.italicSystemFont(ofSize: 12)
+        timeLabel.textColor = UIColor.white
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         headerView.addConstraints([
-            NSLayoutConstraint(item: headerView, attribute: .BottomMargin, relatedBy: .Equal, toItem: timeLabel, attribute: .Bottom, multiplier: 1, constant: 15),
-            NSLayoutConstraint(item: headerView, attribute: .LeadingMargin, relatedBy: .Equal, toItem: timeLabel, attribute: .Leading, multiplier: 1, constant: 0)
+            NSLayoutConstraint(item: headerView, attribute: .bottomMargin, relatedBy: .equal, toItem: timeLabel, attribute: .bottom, multiplier: 1, constant: 15),
+            NSLayoutConstraint(item: headerView, attribute: .leadingMargin, relatedBy: .equal, toItem: timeLabel, attribute: .leading, multiplier: 1, constant: 0)
             
         ])
         
@@ -76,7 +76,7 @@ class StatusViewTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         guard let endpointApiData = endpointApiData else {
             return 0
         }
@@ -84,7 +84,7 @@ class StatusViewTableViewController: UITableViewController {
         return endpointApiData.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let endpointApiData = endpointApiData else {
             return 0
         }
@@ -92,31 +92,31 @@ class StatusViewTableViewController: UITableViewController {
         return endpointApiData[section].endpoints?.count ?? 0
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let endpointApiData = endpointApiData else {
-            return tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+            return tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         }
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! StatusTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! StatusTableViewCell
         let endpointDescribed = endpointApiData[indexPath.section].endpoints![indexPath.row]
         
         cell.endpointName.text = endpointDescribed.getEndpointName()
         
-        if let statusCode =  endpointDescribed.statusCode where statusCode >= 200 && statusCode < 400 {
+        if let statusCode =  endpointDescribed.statusCode, statusCode >= 200 && statusCode < 400 {
             cell.endpointResponseTimeLabel.text = String(endpointDescribed.responseTime ?? 0) + " ms"
             cell.statusBarView.currentRange = endpointDescribed.responseTime ?? 20
-            cell.statusBarView.hidden = false
+            cell.statusBarView.isHidden = false
             
         } else {
             cell.endpointResponseTimeLabel.text = "ERROR RESPONSE"
-            cell.statusBarView.hidden = true
+            cell.statusBarView.isHidden = true
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let wholeView = UIView(frame: CGRectZero)
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let wholeView = UIView(frame: CGRect.zero)
 //        let thinLine =  UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.frame.width, height: 0.5)))
 //        thinLine.backgroundColor = UIColor(red: 0.51, green: 0.52, blue: 0.53, alpha: 1.00)
 //        wholeView.addSubview(thinLine)
@@ -124,19 +124,19 @@ class StatusViewTableViewController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
     }
 
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 //        if section == 0 {
 //            return 0
 //        }
         return 37
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let view = view as? UITableViewHeaderFooterView else {
             print ("Not a UITableViewHeaderFooterView" )
             return
@@ -149,13 +149,13 @@ class StatusViewTableViewController: UITableViewController {
         }
         
         
-        view.textLabel?.textColor = UIColor.blackColor()
+        view.textLabel?.textColor = UIColor.black
         view.backgroundView = nil
-        view.tintColor = UIColor.clearColor()
-        view.textLabel?.textColor = UIColor.blackColor()
+        view.tintColor = UIColor.clear
+        view.textLabel?.textColor = UIColor.black
         view.textLabel?.text = endpointName
         view.textLabel?.frame = view.frame
-        view.textLabel?.font = UIFont.systemFontOfSize(20, weight: UIFontWeightUltraLight)
+        view.textLabel?.font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightUltraLight)
         
     }
     

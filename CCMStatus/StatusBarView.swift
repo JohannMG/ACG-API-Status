@@ -43,7 +43,7 @@ class StatusBarView: UIView {
     
     func drawAndColor(){
         
-        overlayView.frame = CGRect(origin: CGPointZero, size: CGSize(width: CGFloat( getProportionalWidthForCurrentRange() ), height: frame.height))
+        overlayView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: CGFloat( getProportionalWidthForCurrentRange() ), height: frame.height))
         overlayView.backgroundColor = getColorForCurrentRange()
         
         if overlayView.superview == nil {
@@ -57,7 +57,7 @@ class StatusBarView: UIView {
         return linearMap(currentRange, fromRange: (0,2000), toRange: (0, Int(frame.width)) )
     }
     
-    private func linearMap( value: Int, fromRange: SimpleRange, toRange: SimpleRange ) -> Int {
+    fileprivate func linearMap( _ value: Int, fromRange: SimpleRange, toRange: SimpleRange ) -> Int {
         if value < fromRange.min {
             return toRange.min
         } else if value > fromRange.max {
