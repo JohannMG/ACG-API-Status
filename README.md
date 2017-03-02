@@ -6,4 +6,4 @@
  
 _SampleImage_ 
 
-![CCM Staus Screenshot](http://johannmg.com/img/CCMStatusScreen.PNG "CCM Status")
+![CCM Staus Screenshot](http://johannmg.com/img/CCMStatusScreen-hand.png "CCM Status")
